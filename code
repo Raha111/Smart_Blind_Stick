@@ -1,0 +1,70 @@
+Declare variables: distance,duration,safety_distance
+
+Setup():
+    Initialize serial communication
+    Attach buzzer to pin 4
+    Attach ldr_pin to pin 7
+    Attach led_pin to pin 13
+    Attach trig to pin 9
+    Attach echo to pin 10
+    
+void loop() {
+    // Measure the distance using the ultrasonic sensor
+    call measureDistance();
+
+    // Check the safety distance and trigger the buzzer accordingly
+    call checkSafetyDistance();
+
+    // Read the LDR value and control the LED accordingly
+    call controlLED();
+
+    // Delay for a certain period
+    delay(50);
+}
+void measureDistance() {
+    // Trigger the ultrasonic sensor to measure distance
+    SET trigpin LOW
+    delay 2 Microsecond
+    SET trigpin HIGH
+    delay 10 Microsecond
+    SET trigpin LOW
+    Measure the duration for the time echo pin was HIGH
+    Calculating Distance
+    safety_distance = distance
+}
+void checkSafetyDistance() {
+    IF safety_distance < 60 {
+        IF safety_distance < 30 {
+            // Activate the buzzer continuously
+            SET buzz HIGH
+        } ELSE {
+            // Activate the buzzer with intervals
+            SET buzz HIGH
+            delay 1000 Microsecond
+            SET buzz LOW
+           delay 1000 Microsecond
+        }
+    } ELSE {
+        // Deactivate the buzzer
+           SET buzz LOW
+    }
+}
+
+void controlLED() {
+    
+    // Check the LDR value and control the LED accordingly
+    IF value < 250 {
+         SET buz HIGH
+        delay 1000 Microsecond
+    } ELSE {
+        SET buz LOW
+    }
+    
+    // Check the LDR pin status and control the LED accordingly
+    IF digitalRead(ldr_pin) == 1 {
+       SET led_pin HIGH
+    } ELSE {
+         SET led_pin HIGH
+    }
+   
+}
